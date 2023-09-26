@@ -29,11 +29,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     private String login;
@@ -77,7 +77,7 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        
+
         return true;
 
     }

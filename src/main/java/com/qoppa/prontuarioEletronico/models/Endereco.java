@@ -1,27 +1,29 @@
 package com.qoppa.prontuarioEletronico.models;
 
-import java.util.UUID;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Table(name = "course")
-@Entity(name = "course")
+
+@ToString
 @Data
-@Getter
 @Setter
+@EqualsAndHashCode
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Course {
+@Embeddable
+public class Endereco {
 
-    
-    private String name;
-    private Byte period;
+    private String rua;
+    private String cidade;
+    private String estado;
+    private String cep;
+    private String pais;
+
 }
