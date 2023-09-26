@@ -2,14 +2,10 @@ package com.qoppa.prontuarioEletronico.models;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.qoppa.prontuarioEletronico.enums.UserRoleEnum;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +30,7 @@ public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
 
     private String login;
 

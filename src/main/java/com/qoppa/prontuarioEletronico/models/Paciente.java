@@ -2,7 +2,6 @@ package com.qoppa.prontuarioEletronico.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -16,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Table(name = "person")
 @Entity(name = "person")
 @ToString
@@ -27,18 +25,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
-
 public class Paciente extends Pessoa {
 
     private String numeroDeMatricula;
-    
+
     @Embedded
     private Curso curso;
-    
+
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     private List<Prontuario> prontuarios = new ArrayList<>();
-    
+
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     private List<Consulta> consultas = new ArrayList<>();
 

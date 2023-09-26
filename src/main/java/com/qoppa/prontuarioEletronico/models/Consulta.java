@@ -1,7 +1,6 @@
 package com.qoppa.prontuarioEletronico.models;
 
 import java.time.LocalDate;
-import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,8 +28,8 @@ import lombok.ToString;
 public class Consulta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private LocalDate dataConsulta;
     private String sintomas;
     private String diagnostico;

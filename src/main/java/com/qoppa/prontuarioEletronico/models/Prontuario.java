@@ -1,7 +1,6 @@
 package com.qoppa.prontuarioEletronico.models;
 
 import java.util.List;
-import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,8 +28,8 @@ import lombok.ToString;
 public class Prontuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String historicoMedico;
     private String anamnese;
     private boolean alergias;
