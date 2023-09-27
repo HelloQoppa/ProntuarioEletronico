@@ -14,9 +14,13 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
-                // .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/")
-                //         .hasRole("ADMIN").anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .securityMatcher(("/h2-console/**")).build();
+
+        
+        // .authorizeHttpRequests(authorize ->
+        // authorize.requestMatchers(HttpMethod.POST, "/")
+        // .hasRole("ADMIN").anyRequest().authenticated())
 
     }
 
