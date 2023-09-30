@@ -20,14 +20,14 @@ import lombok.ToString;
 @ToString
 @Data
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Paciente extends Pessoa {
 
     private String numeroDeMatricula;
+    private String nomeDoPaciente;
 
     @Embedded
     private Curso curso;

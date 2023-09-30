@@ -2,7 +2,6 @@ package com.qoppa.prontuarioEletronico.models;
 
 import java.time.LocalDate;
 import com.qoppa.prontuarioEletronico.enums.EtiniaEnum;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +22,7 @@ import lombok.ToString;
 @ToString
 @Data
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,8 +32,6 @@ public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nome", insertable = false, updatable = false)
-    private String nome;
     private String telefone;
     private String email;
     private LocalDate dataDeNascimento;

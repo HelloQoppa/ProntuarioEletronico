@@ -1,6 +1,7 @@
 package com.qoppa.prontuarioEletronico.models;
 
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +16,13 @@ import lombok.ToString;
 @ToString
 @Data
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Profissional extends Pessoa {
 
+    private String nomeDoProfissional;
     private String especialidade;
     private String numeroRegistro;
 

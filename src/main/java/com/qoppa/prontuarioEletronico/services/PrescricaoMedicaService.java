@@ -14,7 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class PrescricaoMedicaService implements IPrescricaoMedicaService<PrescricaoMedica> {
 
-    private final IPrescricaoMedicaRepository prescricaoMedicaRepository;
+    private final  IPrescricaoMedicaRepository prescricaoMedicaRepository;
 
     public PrescricaoMedicaService(IPrescricaoMedicaRepository prescricaoMedicaRepository) {
         this.prescricaoMedicaRepository = prescricaoMedicaRepository;

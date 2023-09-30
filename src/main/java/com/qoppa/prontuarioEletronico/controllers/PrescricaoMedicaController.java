@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qoppa.prontuarioEletronico.dto.PrescricaoMedicaDTO;
 import com.qoppa.prontuarioEletronico.models.PrescricaoMedica;
 import com.qoppa.prontuarioEletronico.services.PrescricaoMedicaService;
 
@@ -39,7 +41,12 @@ public class PrescricaoMedicaController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public PrescricaoMedica save(@RequestBody PrescricaoMedica prescricaoMedica) {
+    public PrescricaoMedica save(@RequestBody @Validated PrescricaoMedicaDTO prescricaoMedicaDTO,
+            PrescricaoMedica prescricaoMedica) {
+
+        prescricaoMedica.setMedicamentos(prescricaoMedicaDTO.medicamentos());
+        prescricaoMedica.setDosagemMedicamento(prescricaoMedicaDTO.dosagemMedicamento());
+        prescricaoMedica.setDescricao(prescricaoMedicaDTO.descricao());
         return prescricaoMedicaService.save(prescricaoMedica);
     }
 
