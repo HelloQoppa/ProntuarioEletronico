@@ -1,34 +1,44 @@
 package com.qoppa.prontuarioEletronico.services;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.qoppa.prontuarioEletronico.interfaces.IPacienteService;
 import com.qoppa.prontuarioEletronico.models.Paciente;
+import com.qoppa.prontuarioEletronico.repository.IPacienteRepository;
 
-public class PacienteService implements IPacienteService {
+import jakarta.persistence.EntityNotFoundException;
 
-    @Override
-    public List findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+@Service
+public class PacienteService implements IPacienteService<Paciente> {
+
+    final IPacienteRepository pacienteRepository;
+
+    public PacienteService(IPacienteRepository pacienteRepository) {
+        this.pacienteRepository = pacienteRepository;
     }
 
     @Override
-    public Object findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public List<Paciente> findAll() {
+        return pacienteRepository.findAll();
     }
 
     @Override
-    public Object save(Paciente paciente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public Paciente findById(Long id) {
+        Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
+        return optionalPaciente.orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+    }
+
+    @Override
+    public Paciente save(Paciente paciente) {
+        return pacienteRepository.save(paciente);
     }
 
     @Override
     public void deleteById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        pacienteRepository.deleteById(id);
     }
 
 }

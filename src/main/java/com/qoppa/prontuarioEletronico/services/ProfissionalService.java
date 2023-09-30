@@ -1,34 +1,44 @@
 package com.qoppa.prontuarioEletronico.services;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.qoppa.prontuarioEletronico.interfaces.IProfissionalService;
 import com.qoppa.prontuarioEletronico.models.Profissional;
+import com.qoppa.prontuarioEletronico.repository.IProfissionalRepository;
 
-public class ProfissionalService implements IProfissionalService {
+import jakarta.persistence.EntityNotFoundException;
 
-    @Override
-    public List findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+@Service
+public class ProfissionalService implements IProfissionalService<Profissional> {
+
+    private final IProfissionalRepository profissionalRepository;
+
+    public ProfissionalService(IProfissionalRepository profissionalRepository) {
+        this.profissionalRepository = profissionalRepository;
     }
 
     @Override
-    public Object findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public List<Profissional> findAll() {
+        return profissionalRepository.findAll();
     }
 
     @Override
-    public Object save(Profissional profissional) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public Profissional findById(Long id) {
+        Optional<Profissional> optionalProfissional = profissionalRepository.findById(id);
+        return optionalProfissional.orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+    }
+
+    @Override
+    public Profissional save(Profissional profissional) {
+        return profissionalRepository.save(profissional);
     }
 
     @Override
     public void deleteById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        profissionalRepository.deleteById(id);
     }
 
 }

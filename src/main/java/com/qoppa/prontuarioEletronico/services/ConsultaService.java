@@ -1,34 +1,43 @@
 package com.qoppa.prontuarioEletronico.services;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import com.qoppa.prontuarioEletronico.interfaces.IConsultaService;
 import com.qoppa.prontuarioEletronico.models.Consulta;
+import com.qoppa.prontuarioEletronico.repository.IConsultaRepository;
 
-public class ConsultaService implements IConsultaService {
+import jakarta.persistence.EntityNotFoundException;
 
-    @Override
-    public List findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+@Service
+public class ConsultaService implements IConsultaService<Consulta> {
+
+    final IConsultaRepository consultaRepository;
+
+    public ConsultaService(IConsultaRepository consultaRepository) {
+        this.consultaRepository = consultaRepository;
     }
 
     @Override
-    public Object findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    public List<Consulta> findAll() {
+        return consultaRepository.findAll();
     }
 
     @Override
-    public Object save(Consulta consulta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public Consulta findById(Long id) {
+        Optional<Consulta> optionalConsulta = consultaRepository.findById(id);
+        return optionalConsulta.orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+    }
+
+    @Override
+    public Consulta save(Consulta consulta) {
+        return consultaRepository.save(consulta);
     }
 
     @Override
     public void deleteById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        consultaRepository.deleteById(id);
     }
 
 }
