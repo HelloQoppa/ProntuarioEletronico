@@ -1,6 +1,7 @@
 package com.qoppa.prontuarioEletronico.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public Paciente findById(@PathVariable Long id) {
+    public Optional<Paciente> findById(@PathVariable Long id) {
         return pacienteService.findById(id);
     }
 
@@ -53,12 +54,12 @@ public class PacienteController {
         paciente.setDataDeNascimento(pacienteDTO.dataDeNascimento());
         paciente.setEtinia(pacienteDTO.etinia());
         paciente.setNumeroDeMatricula(pacienteDTO.numeroDeMatricula());
-    
+
         Curso curso = new Curso();
         curso.setNome(pacienteDTO.curso().nome());
         curso.setPeriodo(pacienteDTO.curso().periodo());
         paciente.setCurso(curso);
-    
+
         Endereco endereco = new Endereco();
         endereco.setRua(pacienteDTO.endereco().rua());
         endereco.setCidade(pacienteDTO.endereco().cidade());
@@ -66,7 +67,7 @@ public class PacienteController {
         endereco.setEstado(pacienteDTO.endereco().estado());
         endereco.setPais(pacienteDTO.endereco().pais());
         paciente.setEndereco(endereco);
-    
+
         return pacienteService.save(paciente);
     }
 

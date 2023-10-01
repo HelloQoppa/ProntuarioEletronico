@@ -37,6 +37,7 @@ public class Consulta {
     private boolean statusConsulta;
 
     @ManyToOne
-    @JoinColumn(name = "consultaPacienteId")
+    @JoinColumn(name = "pacienteId")
     private Paciente paciente;
+
 }

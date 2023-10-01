@@ -26,9 +26,9 @@ public class PacienteService implements IPacienteService<Paciente> {
     }
 
     @Override
-    public Paciente findById(Long id) {
+    public Optional<Paciente> findById(Long id) {
         Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
-        return optionalPaciente.orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+        return pacienteRepository.findById(id);
     }
 
     @Override

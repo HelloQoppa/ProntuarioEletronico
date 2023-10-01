@@ -1,6 +1,7 @@
 package com.qoppa.prontuarioEletronico.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.qoppa.prontuarioEletronico.enums.EtiniaEnum;
 
@@ -13,7 +14,9 @@ public record PacienteDTO(
         EtiniaEnum etinia,
         String numeroDeMatricula,
         EnderecoDTO endereco,
-        CursoDTO curso
+        CursoDTO curso,
+        List<ConsultaDTO> consultas,
+        List<ProntuarioDTO> prontuarios
 
 ) {
 
