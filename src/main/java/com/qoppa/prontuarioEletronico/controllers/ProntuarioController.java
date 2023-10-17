@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qoppa.prontuarioEletronico.dto.ConsultaDTO;
 import com.qoppa.prontuarioEletronico.dto.ProntuarioDTO;
+import com.qoppa.prontuarioEletronico.models.Consulta;
 import com.qoppa.prontuarioEletronico.models.Paciente;
 import com.qoppa.prontuarioEletronico.models.Prontuario;
 import com.qoppa.prontuarioEletronico.services.PacienteService;
@@ -47,19 +49,14 @@ public class ProntuarioController {
         return prontuarioService.findById(id);
     }
 
-    @PostMapping("/{pacienteId}")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public Prontuario cadastrarProntuario(@RequestBody @Validated ProntuarioDTO prontuarioDTO) {
-        if (prontuarioDTO.pacienteId() == null) {
-            throw new IllegalArgumentException("O ID do paciente não pode ser nulo");
-        }
-
-        // Obtenha o paciente com base no ID
-        Optional<Paciente> pacienteOptional = pacienteService.findById(prontuarioDTO.pacienteId());
+    @PostMapping
+    public Prontuario cadastrarProntuario(@RequestBody @Validated ProntuarioDTO prontuarioDTO,
+            @RequestParam Long pacienteId) {
+        // Busque o paciente com base no ID
+        Optional<Paciente> pacienteOptional = pacienteService.findById(pacienteId);
         if (pacienteOptional.isPresent()) {
             Paciente paciente = pacienteOptional.get();
 
-            // Crie uma instância de Prontuario e configure-a com os dados do DTO
             Prontuario prontuario = new Prontuario();
             prontuario.setPaciente(paciente);
             prontuario.setHistoricoMedico(prontuarioDTO.historicoMedico());
@@ -77,7 +74,7 @@ public class ProntuarioController {
             prontuario.setGlicemiaCapilar(prontuarioDTO.glicemiaCapilar());
             prontuario.setEvolucaoDeInfermagem(prontuarioDTO.evolucaoDeInfermagem());
 
-            // Salve o prontuário no serviço de prontuário
+            // Salve a consulta no serviço de consulta
             return prontuarioService.save(prontuario);
         } else {
             throw new EntityNotFoundException("Paciente não encontrado");

@@ -26,10 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Profissional extends Pessoa implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private String nomeDoProfissional;
     private String especialidade;
     private String numeroRegistro;
