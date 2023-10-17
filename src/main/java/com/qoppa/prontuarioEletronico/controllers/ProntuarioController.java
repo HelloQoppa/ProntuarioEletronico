@@ -1,9 +1,11 @@
 package com.qoppa.prontuarioEletronico.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,19 +13,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.qoppa.prontuarioEletronico.dto.ProntuarioDTO;
+import com.qoppa.prontuarioEletronico.models.Paciente;
 import com.qoppa.prontuarioEletronico.models.Prontuario;
+import com.qoppa.prontuarioEletronico.services.PacienteService;
 import com.qoppa.prontuarioEletronico.services.ProntuarioService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @RestController
-@RequestMapping("prontuario")
+@RequestMapping("/prontuario")
 public class ProntuarioController {
 
     private final ProntuarioService prontuarioService;
+    private final PacienteService pacienteService;
 
-    public ProntuarioController(ProntuarioService prontuarioService) {
+    public ProntuarioController(ProntuarioService prontuarioService, PacienteService pacienteService) {
         this.prontuarioService = prontuarioService;
+        this.pacienteService = pacienteService;
     }
 
     @GetMapping
@@ -36,10 +47,41 @@ public class ProntuarioController {
         return prontuarioService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/{pacienteId}")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Prontuario save(@RequestBody Prontuario prontuario) {
-        return prontuarioService.save(prontuario);
+    public Prontuario cadastrarProntuario(@RequestBody @Validated ProntuarioDTO prontuarioDTO) {
+        if (prontuarioDTO.pacienteId() == null) {
+            throw new IllegalArgumentException("O ID do paciente não pode ser nulo");
+        }
+
+        // Obtenha o paciente com base no ID
+        Optional<Paciente> pacienteOptional = pacienteService.findById(prontuarioDTO.pacienteId());
+        if (pacienteOptional.isPresent()) {
+            Paciente paciente = pacienteOptional.get();
+
+            // Crie uma instância de Prontuario e configure-a com os dados do DTO
+            Prontuario prontuario = new Prontuario();
+            prontuario.setPaciente(paciente);
+            prontuario.setHistoricoMedico(prontuarioDTO.historicoMedico());
+            prontuario.setAlergias(prontuarioDTO.alergias());
+            prontuario.setAltura(prontuarioDTO.altura());
+            prontuario.setPeso(prontuarioDTO.peso());
+            prontuario.setMedicamentosEmUso(prontuarioDTO.medicamentosEmUso());
+            prontuario.setPressaoArterial(prontuarioDTO.pressaoArterial());
+            prontuario.setFrequenciaCardiaca(prontuarioDTO.frequenciaCardiaca());
+            prontuario.setFrequeciaRespiratoria(prontuarioDTO.frequeciaRespiratoria());
+            prontuario.setTemperatura(prontuarioDTO.temperatura());
+            prontuario.setSaturacao(prontuarioDTO.saturacao());
+            prontuario.setDor(prontuarioDTO.dor());
+            prontuario.setComorbidades(prontuarioDTO.comorbidades());
+            prontuario.setGlicemiaCapilar(prontuarioDTO.glicemiaCapilar());
+            prontuario.setEvolucaoDeInfermagem(prontuarioDTO.evolucaoDeInfermagem());
+
+            // Salve o prontuário no serviço de prontuário
+            return prontuarioService.save(prontuario);
+        } else {
+            throw new EntityNotFoundException("Paciente não encontrado");
+        }
     }
 
     @PutMapping

@@ -9,7 +9,6 @@ import com.qoppa.prontuarioEletronico.interfaces.IPacienteService;
 import com.qoppa.prontuarioEletronico.models.Paciente;
 import com.qoppa.prontuarioEletronico.repository.IPacienteRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PacienteService implements IPacienteService<Paciente> {
@@ -27,7 +26,6 @@ public class PacienteService implements IPacienteService<Paciente> {
 
     @Override
     public Optional<Paciente> findById(Long id) {
-        Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
         return pacienteRepository.findById(id);
     }
 

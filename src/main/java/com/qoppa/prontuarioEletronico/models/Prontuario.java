@@ -1,5 +1,6 @@
 package com.qoppa.prontuarioEletronico.models;
 
+import java.io.Serializable;
 import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,8 +26,9 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Prontuario {
+public class Prontuario implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,12 +39,12 @@ public class Prontuario {
     private Double peso;
     private List<String> medicamentosEmUso;
     private String pressaoArterial;
-    private Double frequeciaCardiaca;
+    private Double frequenciaCardiaca;
     private Double frequeciaRespiratoria;
     private Double temperatura;
     private Double saturacao;
     private Integer dor;
-    private String comobidades;
+    private String comorbidades;
     private String glicemiaCapilar;
     private String evolucaoDeInfermagem;
     @ManyToOne

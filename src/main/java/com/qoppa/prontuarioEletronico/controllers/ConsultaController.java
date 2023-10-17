@@ -43,31 +43,34 @@ public class ConsultaController {
     }
 
     @GetMapping("/{id}")
+
     public Consulta findById(@PathVariable Long id) {
         return consultaService.findById(id);
     }
 
-    // @PostMapping
-    // @ResponseStatus(code = HttpStatus.CREATED)
-    // public Consulta save(@RequestBody @Validated ConsultaDTO consultaDTO) {
-    // Optional<Paciente> pacienteOptional =
-    // pacienteService.findById(consultaDTO.pacienteId());
+    @PostMapping
+    public Consulta saveConsulta(@RequestBody ConsultaDTO consultaDTO, @RequestParam Long pacienteId) {
+        // Busque o paciente com base no ID
+        Optional<Paciente> pacienteOptional = pacienteService.findById(pacienteId);
+        if (pacienteOptional.isPresent()) {
+            Paciente paciente = pacienteOptional.get();
 
-    // if (pacienteOptional.isPresent()) {
-    // Paciente paciente = pacienteOptional.get();
+            // Crie a consulta e atribua o paciente
+            Consulta consulta = new Consulta();
+            consulta.setPaciente(paciente);
+            consulta.setId(pacienteId);
+            consulta.setStatusConsulta(true);
+            consulta.setDataConsulta(consultaDTO.dataConsulta());
+            consulta.setSintomas(consultaDTO.sintomas());
+            consulta.setPrescricaoMedica(consultaDTO.prescricaoMedica());
+            consulta.setDiagnostico(consultaDTO.diagnostico());
 
-    // Consulta consulta = new Consulta();
-    // consulta.setPaciente(paciente);
-    // consulta.setStatusConsulta(true);
-    // consulta.setDataConsulta(consultaDTO.dataConsulta());
-    // consulta.setSintomas(consultaDTO.sintomas());
-    // consulta.setPrescricaoMedica(consultaDTO.prescricaoMedica());
-    // consulta.setDiagnostico(consultaDTO.diagnostico());
-    // return consultaService.save(consulta);
-    // } else {
-    // throw new EntityNotFoundException("Paciente não encontrado");
-    // }
-    // }
+            // Salve a consulta no serviço de consulta
+            return consultaService.save(consulta);
+        } else {
+            throw new EntityNotFoundException("Paciente não encontrado");
+        }
+    }
 
     @PutMapping
     @Transactional

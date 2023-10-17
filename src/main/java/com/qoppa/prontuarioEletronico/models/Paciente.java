@@ -1,5 +1,6 @@
 package com.qoppa.prontuarioEletronico.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
@@ -27,7 +28,9 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Paciente extends Pessoa {
+public class Paciente extends Pessoa implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,11 +39,5 @@ public class Paciente extends Pessoa {
 
     @Embedded
     private Curso curso;
-
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
-    private List<Prontuario> prontuarios = new ArrayList<>();
-
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
-    private List<Consulta> consultas = new ArrayList<>();
 
 }

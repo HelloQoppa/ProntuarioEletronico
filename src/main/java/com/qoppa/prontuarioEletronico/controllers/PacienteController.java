@@ -1,5 +1,6 @@
 package com.qoppa.prontuarioEletronico.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qoppa.prontuarioEletronico.dto.PacienteDTO;
+import com.qoppa.prontuarioEletronico.models.Consulta;
 import com.qoppa.prontuarioEletronico.models.Curso;
 import com.qoppa.prontuarioEletronico.models.Endereco;
 import com.qoppa.prontuarioEletronico.models.Paciente;
+import com.qoppa.prontuarioEletronico.models.Prontuario;
 import com.qoppa.prontuarioEletronico.services.PacienteService;
 
 @RestController
@@ -67,6 +70,14 @@ public class PacienteController {
         endereco.setEstado(pacienteDTO.endereco().estado());
         endereco.setPais(pacienteDTO.endereco().pais());
         paciente.setEndereco(endereco);
+
+        List<Prontuario> prontuarios = new ArrayList<>();
+
+       // paciente.setProntuarios(prontuarios);
+
+        List<Consulta> consultas = new ArrayList<>();
+
+       // paciente.setConsultas(consultas);
 
         return pacienteService.save(paciente);
     }
